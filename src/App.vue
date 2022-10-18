@@ -1,30 +1,51 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="flex flex-col min-h-screen">
+    <header class="flex items-center border-b border-gray-600">
+      <router-link to="/profile" class="p-4 mr-3 text-green-500 text-2xl">
+         <i class="fas fa-user"></i>
+      </router-link>
+      <h1 class="text-white font-black text-xl">
+        {{$route.name}}
+      </h1>
+    </header>
+    <main class="flex-1 overflow-scroll">
+      <router-view/>
+    </main>
+    <footer class="grid grid-cols-4 border-t border-gray-600">
+     
+      <router-link 
+      v-for="(route, i) in routes"
+      :key="i"
+      :to="route.path" 
+      class="p-4text-center text-2xl"
+      :class="route.name === $route.name? 'text-green-500': 'text-gray-300'"
+      >
+        <i :class="route?.meta?.iconClass"></i>
+      </router-link>
+    </footer>
+  </div>
 </template>
+<script lang="ts">
+import { defineComponent, onBeforeMount, Ref, ref } from 'vue';
+import { Router, RouteRecordRaw, useRouter } from 'vue-router';
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+export default defineComponent({
+  setup(){
+    const router = useRouter();
+    const routes: Ref<Array<RouteRecordRaw>> = ref([]);
 
-nav {
-  padding: 30px;
-}
+    onBeforeMount(()=>{
+      routes.value = router.options.routes
+      .filter(r=> r?.meta?.mainMenu)
+      
+    })
+  
+    return {
+      routes
+    }
+  
+  }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+})
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+</script>

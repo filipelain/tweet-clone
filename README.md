@@ -1,4 +1,7 @@
 # twitter-clone
+Simple Tweet colne project in vue 3 with Tailwind
+based on Youtube [video](https://www.youtube.com/watch?v=eue3jbwxQS0&list=PLAVh5X4BMWtwINLsrBWiLAB6Mf5C4JE0v&index=24) 
+
 
 ## Project setup
 ```
